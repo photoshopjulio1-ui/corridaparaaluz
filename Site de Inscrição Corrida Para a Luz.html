@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrida Para a Luz 2026 - Portal Oficial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+    :root {
+        --primary-color: #E5A13F;
+        --primary-hover: #E3E3E3;
+        --background: #EDE6DF;
+        --text-color: #333;
+        --card-bg: #FFFFFF;
+
+        --admin-btn: #FAA954;
+        --admin-btn-hover: #E5923D;
+
+        --whatsapp-color: #E5A13F;
+        --whatsapp-hover: #E5A13F;
+
+        --delete-btn: #C94A3A;
+        --delete-btn-hover: #A83B2E;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--text-color);
+        padding: 20px;
+        min-height: 100vh;
+    }
+
+    .nav-portal {
+        max-width: 1200px;
+        margin: 0 auto 20px;
+        background: var(--card-bg);
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-tabs {
+        display: flex;
+        gap: 15px;
+    }
+
+    .nav-btn {
+        padding: 8px 16px;
+        background: none;
+        border: none;
+        color: #666;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        width: auto;
+        margin: 0;
+    }
+
+    .nav-btn.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+    }
+
+    .view-section {
+        display: none;
+        width: 100%;
+    }
+
+    .view-section.active {
+        display: block;
+    }
+
+    .container {
+        background-color: var(--card-bg);
+        max-width: 600px;
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 30px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #F3D5A5;
+        padding-bottom: 20px;
+    }
+
+    .main-logo {
+        height: 80px;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        margin: 0 auto 10px;
+        display: block;
+    }
+
+    .header h1 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"],
+    select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #CCC;
+        border-radius: 6px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: var(--primary-color);
+    }
+
+    .radio-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 5px;
+    }
+
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: var(--primary-hover);
+    }
+
+    button:disabled {
+        background-color: #999;
+        cursor: not-allowed;
+    }
+
+    #mensagem {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        display: none;
+        font-weight: 600;
+    }
+
+    .sucesso {
+        background-color: #FFF0D9;
+        color: #8A5A16;
+    }
+
+    .erro {
+        background-color: #F8D7DA;
+        color: #721C24;
+    }
+
+    .wrapper-card {
+        display: none;
+        max-width: 500px;
+        width: 100%;
+        margin: 30px auto 0;
+        text-align: center;
+    }
+
+    .card-inscricao {
+        background: #FFFFFF;
+        border: 3px solid var(--primary-color);
+        border-radius: 16px;
+        padding: 25px;
+        text-align: left;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        position: relative;
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px dashed var(--primary-color);
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+
+    .card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .card-logo {
+        max-height: 60px;
+        max-width: 90px;
+        object-fit: contain;
+    }
+
+    .card-title h2 {
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        margin-bottom: 3px;
+    }
+
+    .card-badge {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 0.8rem;
+        display: inline-block;
+    }
+
+    #qrcode-container {
+        padding: 4px;
+        background: white;
+        border-radius: 8px;
+        border: 2px solid var(--primary-color);
+    }
+
+    #qrcode-container img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .card-item.full-width {
+        grid-column: span 2;
+    }
+
+    .card-label {
+        font-size: 0.75rem;
+        color: #777;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .card-value {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .card-footer {
+        margin-top: 25px;
+        border-top: 1px solid #E5E5E5;
+        padding-top: 10px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #777;
+        font-style: italic;
+    }
+
+    .btn-salvar {
+        background-color: var(--admin-btn);
+        margin-top: 15px;
+    }
+
+    .btn-salvar:hover {
+        background-color: var(--admin-btn-hover);
+    }
+
+    .btn-whatsapp {
+        background-color: var(--whatsapp-color);
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-whatsapp:hover {
+        background-color: var(--whatsapp-hover);
+    }
+
+    .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .widget {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    .widget h3 {
+        font-size: 0.9rem;
+        color: #666;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+
+    .widget .number {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+
+    .widget .sub-list {
+        text-align: left;
+        margin-top: 10px;
+        font-size: 0.85rem;
+    }
+
+    .widget .sub-list div {
+        display: flex;
+        justify-content: space-between;
+        padding: 2px 0;
+        border-bottom: 1px dashed #F0DDBE;
+    }
+
+    .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .search-bar {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #CCC;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .btn-refresh {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        width: auto;
+        margin: 0;
+    }
+
+    .table-container {
+        background: var(--card-bg);
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.9rem;
+    }
+
+    th,
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #EEE;
+    }
+
+    th {
+        background: #FFF0DB;
+        color: #A96919;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background: #FFFAF3;
+    }
+
+    .acoes-flex {
+        display: flex;
+        gap: 6px;
+    }
+
+    .btn-edit {
+        background: var(--admin-btn);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        width: auto;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .btn-delete-table {
+        background: var(--delete-btn);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        width: auto;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+
+    .modal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .modal-grid .full {
+        grid-column: span 2;
+    }
+
+    .modal input,
+    .modal select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #CCC;
+        border-radius: 4px;
+    }
+
+    .modal-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .modal-buttons-row {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .btn-save {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: auto;
+    }
+
+    .btn-cancel {
+        background: #999;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: auto;
+    }
+
+    .btn-print-card {
+        background: var(--admin-btn);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    /* Estilos do Login */
+
+    #loginOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--background);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    .login-box h2 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .login-box input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #CCC;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .login-box input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .btn-login:hover {
+        background: var(--primary-hover);
+    }
+
+    .btn-login:disabled {
+        background: #999;
+    }
+
+    #loginMsg {
+        margin-top: 15px;
+        color: var(--delete-btn);
+        display: none;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- Overlay de Segurança -->
+<div id="loginOverlay">
+    <div class="login-box">
+        <h2>Acesso Restrito</h2>
+        <input type="password" id="inputSenha" placeholder="Senha do Administrador">
+        <button id="btnLogin" class="btn-login" onclick="fazerLogin()">Acessar Portal</button>
+        <div id="loginMsg"></div>
+    </div>
+</div>
+
+<!-- O restante do HTML continua EXATAMENTE IGUAL até o script -->
+
+<div class="nav-portal">
+    <div style="font-weight: bold; color: var(--primary-color);">Corrida Para a Luz 2026</div>
+    <div class="nav-tabs">
+        <button class="nav-btn active" onclick="alternarAba('inscricao')">Inscrição</button>
+        <button class="nav-btn" onclick="alternarAba('admin')">Painel Admin</button>
+    </div>
+</div>
+
+<div id="sectionInscricao" class="view-section active">
+    <div class="container">
+        <div class="header">
+            <img src="https://i.imgur.com/j9Faafx.png" alt="Logo Corrida Para a Luz" class="main-logo">
+            <h1>Corrida Para a Luz 2026</h1>
+            <p>Inscrição de Atleta</p>
+        </div>
+
+        <form id="formInscricao">
+            <div class="form-group">
+                <label for="nome">NOME DO ATLETA</label>
+                <input type="text" id="nome" name="nome" required placeholder="Nome completo">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>SEXO</label>
+                    <div class="radio-group">
+                        <label class="radio-option"><input type="radio" name="sexo" value="F" required> F</label>
+                        <label class="radio-option"><input type="radio" name="sexo" value="M" required> M</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">CATEGORIA</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="5KM">5 KM</option>
+                        <option value="10KM">10 KM</option>
+                        <option value="KIDS">KIDS</option>
+ 			<option value="PCD">PCD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">EMAIL</label>
+                <input type="email" id="email" name="email" required placeholder="exemplo@email.com">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00">
+                </div>
+                <div class="form-group">
+                    <label for="dataNasc">DATA NASC.</label>
+                    <input type="date" id="dataNasc" name="dataNasc" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="celular">CELULAR</label>
+                    <input type="tel" id="celular" name="celular" required placeholder="(00) 00000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="equipe">EQUIPE</label>
+                    <input type="text" id="equipe" name="equipe" placeholder="Nome da equipe (opcional)">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tamCamisa">TAM. CAMISA</label>
+                    <select id="tamCamisa" name="tamCamisa" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="PP">PP</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                       <option value="S/C">S/C</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cidade">CIDADE</label>
+                    <input type="text" id="cidade" name="cidade" required placeholder="Sua cidade">
+                </div>
+            </div>
+
+            <button type="submit" id="btnEnviar">Enviar Inscrição</button>
+            <div id="mensagem"></div>
+        </form>
+    </div>
+
+    <div class="wrapper-card" id="wrapperCard">
+        <div class="card-inscricao" id="vagaCard">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <img src="https://i.imgur.com/j9Faafx.png" alt="Logo" class="card-logo">
+                    <div class="card-title" align="center">
+                        <h2>A São Silvestre do Nordeste</h2> <h3>Edição histórica de 25 anos!</h3>
+
+                        <div class="card-badge" id="cBadge">5,5KM</div>
+                    </div>
+                </div>
+                <div id="qrcode-container"></div>
+            </div>
+            <div class="card-grid">
+                <div class="card-item full-width">
+                    <div class="card-label">Atleta</div>
+                    <div class="card-value" id="cNome">Nome do Atleta</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">CPF</div>
+                    <div class="card-value" id="cCpf">000.000.000-00</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Data Nasc.</div>
+                    <div class="card-value" id="cDataNasc">00/00/0000</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Sexo</div>
+                    <div class="card-value" id="cSexo">M</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-label">Camisa</div>
+                    <div class="card-value" id="cCamisa">G</div>
+                </div>
+                <div class="card-item full-width">
+                    <div class="card-label">Cidade</div>
+                    <div class="card-value" id="cCidade">Sua Cidade</div>
+                </div>
+                <div class="card-item full-width">
+                    <div class="card-label">Equipe</div>
+                    <div class="card-value" id="cEquipe">Nome da Equipe</div>
+                </div>
+            </div>
+            <input type="hidden" id="cTelefoneOculto" value="">
+
+            <div style="margin-top: 15px; font-size: 1rem; border-top: 1px solid #ddd; padding-top: 10px; line-height: 1.4;">
+                <div style="font-weight: bold; color: var(--primary-color);">HORÁRIO E LOCAL</div>
+                <div><strong>Data:</strong> 20 de dezembro de 2026 | <strong>Concentração:</strong> 06h00 | <strong>Largada:</strong> 06h30</div>
+                <div><strong>Local:</strong> R. Manoel Hónorato da Costa (ao lado do Shopping Camará).</div>
+                
+                <div style="font-weight: bold; color: var(--primary-color); margin-top: 8px;">RETIRADA DO KIT</div>
+                <div><strong>Dias:</strong> 18 e 19 de dezembro, das 14h00 às 19h00.</div>
+                <div><strong>Local:</strong> Loja Centauro (1º andar) - Shopping Camará</div>
+                <div style="font-weight: bold; color: var(--primary-color); margin-top: 10px;">NÃO HAVERÁ RETIRADA DE KITS NO DIA DO EVENTO!</div>
+            </div>
+
+            <div class="card-footer">Inscrição cadastrada com sucesso.</div>
+        </div>
+        <button class="btn-salvar" id="btnBaixar">Salvar como Imagem (PNG)</button>
+        <button class="btn-whatsapp" id="btnZap">Enviar via WhatsApp (Auto-Colar)</button>
+    </div>
+</div>
+
+<div id="sectionAdmin" class="view-section">
+    <div class="admin-container">
+        <div class="dashboard-grid">
+            <div class="widget">
+                <h3>Total Inscritos</h3>
+                <div class="number" id="dashTotal">0</div>
+            </div>
+            <div class="widget">
+                <h3>Por Categoria</h3>
+                <div class="sub-list" id="dashCategorias"></div>
+            </div>
+            <div class="widget">
+                <h3>Tamanho de Camisas</h3>
+                <div class="sub-list" id="dashCamisas"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" class="search-bar" id="inputBusca" placeholder="Pesquisar por Número, Nome, CPF, Equipe...">
+            <button class="btn-refresh" id="btnAtualizar">Atualizar Dados</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Atleta</th>
+                        <th>Categoria</th>
+                        <th>CPF</th>
+                        <th>Nascimento</th>
+                        <th>Celular</th>
+                        <th>Equipe</th>
+                        <th>Camisa</th>
+                        <th>Kit</th> <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaInscritos">
+                    <tr><td colspan="10" style="text-align:center;">Clique em 'Atualizar Dados' para carregar do Google Sheets.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalEdicao">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Editar Inscrição</h3>
+            <strong style="cursor:pointer; font-size: 1.2rem; padding: 5px;" onclick="fecharModal()">X</strong>
+        </div>
+        <form id="formEdicao">
+            <input type="hidden" id="editRowIndex" name="rowIndex">
+            <input type="hidden" id="editAcao" name="acao" value="editar">
+            <div class="modal-grid">
+                <div class="full">
+                    <label style="color:var(--primary-color);">NÚMERO DO ATLETA (Opcional)</label>
+                    <input type="text" id="editNumero" name="numero" placeholder="Ex: 001">
+                </div>
+                <div class="full"><label>NOME DO ATLETA</label><input type="text" id="editNome" name="nome" required></div>
+                <div><label>SEXO</label><select id="editSexo" name="sexo"><option value="M">M</option><option value="F">F</option></select></div>
+                <div><label>CATEGORIA</label><select id="editCategoria" name="categoria"><option value="5KM">5 KM</option><option value="10KM">10 KM</option><option value="KIDS">KIDS</option><option value="PCD">PCD</option></select></div>
+                <div class="full"><label>EMAIL</label><input type="email" id="editEmail" name="email" required></div>
+                <div><label>CPF</label><input type="text" id="editCpf" name="cpf" required></div>
+                <div><label>DATA NASC.</label><input type="text" id="editDataNasc" name="dataNasc" required placeholder="dd/mm/aaaa"></div>
+                <div><label>CELULAR</label><input type="text" id="editCellular" name="celular" required></div>
+                <div><label>EQUIPE</label><input type="text" id="editEquipe" name="equipe"></div>
+                <div><label>TAM. CAMISA</label><select id="editTamCamisa" name="tamCamisa"><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="S/C">S/C</option></select></div>
+                <div><label>CIDADE</label><input type="text" id="editCidade" name="cidade" required></div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-print-card" onclick="gerarCardPorEdicao()">Gerar Card de Inscrição</button>
+                <div class="modal-buttons-row">
+                    <button type="button" class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn-save" id="btnSalvarEdicao">Salvar Alterações</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // ⚠️ SUBSTITUA COM A URL DO SEU NOVO DEPLOY
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCAfptJOIm7-yjj1L3Ji8NCQFT7sk5FYyydEyiiBtp4iJJwVoOfUMb_GG21932GPtb/exec';
+    
+    let cacheDados = [];
+    let senhaAdmin = sessionStorage.getItem('2026Senha');
+
+    function verificarAcesso() {
+        if (!senhaAdmin) {
+            document.getElementById('loginOverlay').style.display = 'flex';
+        } else {
+            document.getElementById('loginOverlay').style.display = 'none';
+        }
+    }
+
+    function fazerLogin() {
+        const input = document.getElementById('inputSenha').value;
+        const btn = document.getElementById('btnLogin');
+        const msg = document.getElementById('loginMsg');
+        
+        btn.innerText = 'Validando...';
+        btn.disabled = true;
+        msg.style.display = 'none';
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ acao: 'login', senha: input })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'sucesso') {
+                senhaAdmin = input;
+                sessionStorage.setItem('2026Senha', senhaAdmin);
+                document.getElementById('loginOverlay').style.display = 'none';
+            } else {
+                msg.innerText = data.mensagem;
+                msg.style.display = 'block';
+            }
+        })
+        .catch(err => {
+            msg.innerText = 'Erro ao conectar. Verifique a URL do Script.';
+            msg.style.display = 'block';
+        })
+        .finally(() => {
+            btn.innerText = 'Acessar Portal';
+            btn.disabled = false;
+        });
+    }
+
+    function alternarAba(aba) {
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+        
+        if (aba === 'inscricao') {
+            document.querySelector('[onclick="alternarAba(\'inscricao\')"]').classList.add('active');
+            document.getElementById('sectionInscricao').classList.add('active');
+        } else if (aba === 'admin') {
+            document.querySelector('[onclick="alternarAba(\'admin\')"]').classList.add('active');
+            document.getElementById('sectionAdmin').classList.add('active');
+            puxarDados(); 
+        }
+    }
+
+    document.getElementById('formInscricao').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('btnEnviar');
+        const msgDiv = document.getElementById('mensagem');
+        btn.disabled = true;
+        btn.innerText = 'Processando...';
+        msgDiv.style.display = 'none';
+
+        const formData = new FormData(this);
+        const dataObj = {};
+        formData.forEach((value, key) => dataObj[key] = value);
+        dataObj.senha = senhaAdmin;
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(dataObj)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "erro") {
+                if(data.mensagem.includes("Acesso negado")) location.reload();
+                throw new Error(data.mensagem);
+            }
+            
+            msgDiv.className = 'sucesso';
+            msgDiv.innerText = 'Inscrição efetuada com sucesso!';
+            msgDiv.style.display = 'block';
+
+            // Chama a alimentação do card pedindo para gerar o QR Code (true no último parâmetro)
+            alimentarCard(dataObj.nome, dataObj.sexo, dataObj.categoria, dataObj.cpf, dataObj.cidade, dataObj.tamCamisa, dataObj.equipe, dataObj.dataNasc, dataObj.celular, true, true);
+            document.getElementById('formInscricao').reset();
+        })
+        .catch(error => {
+            msgDiv.className = 'erro';
+            msgDiv.innerText = 'Erro, não foi possivel efetuar a inscrição: ' + error.message;
+            msgDiv.style.display = 'block';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerText = 'Enviar Inscrição';
+        });
+    });
+
+    // Modificado: O QR Code agora recebe o CPF e retira pontos e traços
+    function gerarQRCode(cpfTexto) {
+        const qrContainer = document.getElementById("qrcode-container");
+        qrContainer.innerHTML = ""; 
+        const cpfLimpo = String(cpfTexto).replace(/\D/g, ""); // Apenas números
+        new QRCode(qrContainer, {
+            text: "CorridaLuz2026ID-" + cpfLimpo, 
+            width: 75,
+            height: 75,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.L
+        });
+    }
+
+    // Modificado: Recebe a flag de gerarQr e utiliza o próprio CPF (4º parâmetro)
+    function alimentarCard(nome, sexo, categoria, cpf, city, camisa, equipe, dataNasc, celular, converterData=false, gerarQr=false) {
+        document.getElementById('cNome').innerText = nome;
+        document.getElementById('cSexo').innerText = sexo;
+        document.getElementById('cBadge').innerText = categoria;
+        document.getElementById('cCpf').innerText = cpf;
+        document.getElementById('cCidade').innerText = city;
+        document.getElementById('cCamisa').innerText = camisa;
+        document.getElementById('cEquipe').innerText = equipe || 'Nenhuma';
+        document.getElementById('cTelefoneOculto').value = celular || '';
+        
+        if(converterData && dataNasc) {
+            const [ano, mes, dia] = dataNasc.split('-');
+            document.getElementById('cDataNasc').innerText = `${dia.padStart(2, '0')}/${mes.padStart(2, '0')}/${ano}`;
+        } else {
+            document.getElementById('cDataNasc').innerText = dataNasc || '00/00/0000';
+        }
+
+        if(gerarQr) gerarQRCode(cpf); // Passa o CPF para gerar o QR Code
+
+        document.getElementById('wrapperCard').style.display = 'block';
+    }
+
+    function gerarCardPorEdicao() {
+        fecharModal();
+        alimentarCard(
+            document.getElementById('editNome').value,
+            document.getElementById('editSexo').value,
+            document.getElementById('editCategoria').value,
+            document.getElementById('editCpf').value,
+            document.getElementById('editCidade').value,
+            document.getElementById('editTamCamisa').value,
+            document.getElementById('editEquipe').value,
+            document.getElementById('editDataNasc').value,
+            document.getElementById('editCellular').value,
+            false, true // Ativa a geração do QR Code com o CPF do formulário
+        );
+        alternarAba('inscricao');
+        document.getElementById('wrapperCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('btnBaixar').addEventListener('click', function() {
+        const cardElem = document.getElementById('vagaCard');
+        this.innerText = 'Gerando...';
+        this.disabled = true;
+        setTimeout(() => {
+            html2canvas(cardElem, { scale: 2, backgroundColor: null, useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Inscricao_${document.getElementById('cNome').innerText.replace(/\s+/g, '_')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                this.innerText = 'Salvar como Imagem (PNG)';
+                this.disabled = false;
+            });
+        }, 300);
+    });
+
+    document.getElementById('btnZap').addEventListener('click', function() {
+        const cardElem = document.getElementById('vagaCard');
+        const telefoneRaw = document.getElementById('cTelefoneOculto').value;
+        if(!telefoneRaw) return alert("Telefone não localizado.");
+
+        let telefoneLimpo = telefoneRaw.replace(/\D/g, "");
+        if(telefoneLimpo.length === 11 && !telefoneLimpo.startsWith("55")) telefoneLimpo = "55" + telefoneLimpo;
+
+        this.innerText = 'Copiando...';
+        setTimeout(() => {
+            html2canvas(cardElem, { scale: 2, backgroundColor: "#ffffff", useCORS: true }).then(canvas => {
+                canvas.toBlob(blob => {
+                    const item = new ClipboardItem({ "image/png": blob });
+                    navigator.clipboard.write([item]).then(() => {
+                        const txt = encodeURIComponent(`Olá, *${document.getElementById('cNome').innerText}*! Sua inscrição foi confirmada. Seja bem vindo(a) a esta grande festa!🏃‍♂️`);
+                        window.open(`https://api.whatsapp.com/send?phone=${telefoneLimpo}&text=${txt}`, '_blank');
+                        this.innerText = 'Enviar via WhatsApp (Auto-Colar)';
+                    });
+                });
+            });
+        }, 300);
+    });
+
+    function puxarDados() {
+        document.getElementById('tabelaInscritos').innerHTML = '<tr><td colspan="10" style="text-align:center;">Carregando dados...</td></tr>';
+        
+        fetch(SCRIPT_URL + "?senha=" + encodeURIComponent(senhaAdmin))
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "erro") {
+                if(data.mensagem.includes("Acesso negado")) location.reload();
+                throw new Error(data.mensagem);
+            }
+            cacheDados = data;
+            renderizarDashboard(cacheDados);
+        })
+        .catch((e) => {
+            document.getElementById('tabelaInscritos').innerHTML = `<tr><td colspan="10" style="text-align:center; color:red;">Erro: ${e.message}</td></tr>`;
+        });
+    }
+
+    function renderizarDashboard(lista) {
+        document.getElementById('dashTotal').innerText = lista.length;
+        let cats = { '5KM': 0, '10KM': 0, 'KIDS': 0, 'PCD': 0}, cams = { 'PP': 0, 'P': 0, 'M': 0, 'G': 0, 'GG': 0, 'S/C': 0 };
+        lista.forEach(i => {
+            if(cats[i.categoria] !== undefined) cats[i.categoria]++;
+            if(cams[i.tamCamisa] !== undefined) cams[i.tamCamisa]++;
+        });
+        document.getElementById('dashCategorias').innerHTML = Object.keys(cats).map(k => `<div><span>${k}</span><strong>${cats[k]}</strong></div>`).join('');
+        document.getElementById('dashCamisas').innerHTML = Object.keys(cams).map(k => `<div><span>Tamanho ${k}</span><strong>${cams[k]}</strong></div>`).join('');
+        renderizarTabela(lista);
+    }
+
+    function renderizarTabela(lista) {
+        const tbody = document.getElementById('tabelaInscritos');
+        if(lista.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">Nenhum registro encontrado.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = lista.map(item => `
+            <tr>
+                <td>
+                    <span style="display:inline-block; background:#E5A13F; color:white; padding: 2px 6px; font-size:0.75rem; font-weight:bold; border-radius:4px; margin-right:5px;">
+                        ${item.numero ? '#' + item.numero : 'S/Nº'}
+                    </span>
+                    <strong>${item.nome}</strong><br>
+                    <small style="color:#777; margin-left: 32px;">${item.email}</small>
+                </td>
+                <td>${item.categoria}</td>
+                <td>${String(item.cpf).replace(/'/g, "")}</td>
+                <td style="font-weight: 600; color:#333">${item.dataNasc}</td>
+                <td>${item.celular || '-'}</td>
+                <td>${item.equipe || '-'}</td>
+                <td><span style="background:#eee; padding:2px 6px; border-radius:4px; font-weight:bold;">${item.tamCamisa}</span></td>
+                <td style="text-align: center;">
+                    <input type="checkbox" style="transform: scale(1.5); accent-color: var(--primary-color); cursor: pointer;" 
+                           ${item.kitEntregue === "SIM" ? "checked disabled" : ""} 
+                           onchange="confirmarEntregaKit(${item.rowIndex}, '${item.nome.replace(/'/g, "\\'")}', this)">
+                </td>
+                <td>
+                    <div class="acoes-flex">
+                        <button class="btn-edit" onclick="abrirModal(${item.rowIndex})">Editar</button>
+                        <button class="btn-delete-table" onclick="deletarInscricao(${item.rowIndex}, '${item.nome.replace(/'/g, "\\'")}')">Excluir</button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    document.getElementById('inputBusca').addEventListener('input', function(e) {
+        const termo = e.target.value.toLowerCase().trim();
+        if(!termo) return renderizarTabela(cacheDados);
+
+        renderizarTabela(cacheDados.filter(i => 
+            String(i.nome).toLowerCase().includes(termo) || 
+            String(i.numero).toLowerCase().includes(termo) || 
+            String(i.cpf).toLowerCase().includes(termo) || 
+            String(i.dataNasc).toLowerCase().includes(termo) || 
+            String(i.equipe).toLowerCase().includes(termo) ||
+            String(i.cidade).toLowerCase().includes(termo)
+        ));
+    });
+
+    function abrirModal(rowIndex) {
+        const item = cacheDados.find(i => i.rowIndex === rowIndex);
+        if(!item) return;
+
+        document.getElementById('editRowIndex').value = item.rowIndex;
+        document.getElementById('editNumero').value = item.numero || ''; 
+        document.getElementById('editNome').value = item.nome;
+        document.getElementById('editSexo').value = item.sexo;
+        document.getElementById('editCategoria').value = item.categoria;
+        document.getElementById('editEmail').value = item.email;
+        document.getElementById('editCpf').value = String(item.cpf).replace(/'/g, "");
+        document.getElementById('editDataNasc').value = item.dataNasc;
+        document.getElementById('editCellular').value = item.celular || '';
+        document.getElementById('editEquipe').value = item.equipe || '';
+        document.getElementById('editTamCamisa').value = item.tamCamisa;
+        document.getElementById('editCidade').value = item.cidade;
+
+        document.getElementById('modalEdicao').style.display = 'flex';
+    }
+
+    function fecharModal() { document.getElementById('modalEdicao').style.display = 'none'; }
+
+    document.getElementById('formEdicao').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('btnSalvarEdicao');
+        btn.innerText = 'Salvando...';
+        btn.disabled = true;
+
+        const formData = new FormData(this);
+        const dataObj = {};
+        formData.forEach((val, key) => dataObj[key] = val);
+        dataObj.senha = senhaAdmin;
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(dataObj)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "erro") throw new Error(data.mensagem);
+            alert('Cadastro atualizado com sucesso!');
+            fecharModal();
+            puxarDados(); 
+        })
+        .catch(error => alert('Erro ao atualizar: ' + error.message))
+        .finally(() => {
+            btn.innerText = 'Salvar Alterações';
+            btn.disabled = false;
+        });
+    });
+
+    document.getElementById('btnAtualizar').addEventListener('click', puxarDados);
+
+    function deletarInscricao(rowIndex, nome) {
+        if (confirm(`Tem certeza que deseja excluir permanentemente a inscrição de ${nome}?`)) {
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ acao: "deletar", rowIndex: rowIndex, senha: senhaAdmin })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "erro") throw new Error(data.mensagem);
+                alert(`Inscrição de ${nome} excluída com sucesso!`);
+                puxarDados(); 
+            })
+            .catch(error => alert('Ocorreu um erro: ' + error.message));
+        }
+    }
+
+    function confirmarEntregaKit(rowIndex, nome, checkbox) {
+        if (checkbox.checked) {
+            if (confirm(`Você confirma a entrega da camisa e do kit para o(a) atleta ${nome}?`)) {
+                checkbox.disabled = true; 
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ acao: "marcarKit", rowIndex: rowIndex, status: "SIM", senha: senhaAdmin })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "erro") throw new Error(data.mensagem);
+                    setTimeout(() => puxarDados(), 1000); 
+                })
+                .catch(error => {
+                    alert('Erro ao confirmar entrega: ' + error.message);
+                    checkbox.checked = false; 
+                    checkbox.disabled = false;
+                });
+            } else {
+                checkbox.checked = false;
+            }
+        }
+    }
+
+    window.onload = verificarAcesso;
+</script>
+</body>
+</html>
